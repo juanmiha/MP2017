@@ -1,0 +1,207 @@
+package org.mp.sesion03;
+/**
+ * ArrayList
+ *
+ * @author Juan Miguel Herrada Acosta
+ * @version 02.04.2017
+ * @param <E>
+ */
+public class ArrayList<E> extends AbstractList<E> {
+
+  private static final int CAPACIDAD_INICIAL = 16;
+  @SuppressWarnings("unchecked")
+  private E[] data = (E[])new Object[CAPACIDAD_INICIAL];
+
+  /** Create a default list */
+  public ArrayList() {
+  }
+
+  /** Create a list from an array of objects */
+  public ArrayList(E[] objects) {
+    for (int i = 0; i < objects.length; i++)
+      add(objects[i]); // Warning: don't use super(objects)!
+  }
+
+  @Override
+  /** Add a new element at the specified index */
+  public void add(int index, E e) {
+    ensureCapacity();
+
+    // Move the elements to the right after the specified index
+    for (int i = size - 1; i >= index; i--)
+      data[i + 1] = data[i];
+
+    // Insert new element to data[index]
+    data[index] = e;
+
+    // Increase size by 1
+    size++;
+  }
+
+  /** Create a new larger array, double the current size + 1 */
+  private void ensureCapacity() {
+	  // Verifica cuando el array está lleno.
+	  if(data[CAPACIDAD_INICIAL - 1] != null){
+		  @SuppressWarnings("unchecked")
+		  // crea un nuevo array con el doble tamaño más 1 y copia
+		  E[] dobleData = (E[]) new Object[CAPACIDAD_INICIAL * 2 + 1];
+		  // el array en el nuevo utilizando el método System.arraycopy
+		  System.arraycopy(data, 0, dobleData, 0, data.length);
+		  // pone el nuevo array como el array a utilizar
+		  data = dobleData;
+	  }
+  }
+
+  @Override
+  /** Clear the list */
+  public void clear() {
+	  // Crea un nuevo array de tamaño CAPACIDAD_INICIAL
+	  @SuppressWarnings("unchecked")
+	  E[] clearData = (E[]) new Object[CAPACIDAD_INICIAL];
+	  // el array en el nuevo utilizando el método System.arraycopy
+	  System.arraycopy(data, 0, clearData, 0, CAPACIDAD_INICIAL);
+	  data = clearData;
+	  //resetea la variable size a 0
+	  size = 0;
+  }
+
+  @Override
+  /** Return true if this list contains the element */
+  public boolean contains(E e) {
+      for (int i = 0; i < data.length;i++){
+    	  if(e == data[i]){
+    		  return true;
+    	  }
+      }
+	  return false;
+  }
+
+  @Override /** Return the element at the specified index */
+  public E get(int index) {
+    checkIndex(index);
+    return data[index];
+  }
+  /**
+   * Comprueba si index está en el rango. Si no, el método lanza esa Excepción.
+   *
+   * @param index
+   */
+  private void checkIndex(int index) {
+    if (index < 0 || index >= size)
+      throw new IndexOutOfBoundsException
+        ("Indice: " + index + ", Tamaño: " + size);
+  }
+
+  @Override
+  /** Return the index of the first matching element
+   *  in this list. Return -1 if no match.
+   */
+  public int indexOf(E e) {
+      for(int i = 0; i < size;i++){
+    	  if(e == data[i])
+    		  return i;
+      }
+      return -1;
+  }
+
+  @Override
+  /** Return the index of the last matching element
+   *  in this list. Return -1 if no match.
+   */
+  public int lastIndexOf(E e) {
+	  for(int i = size -1; i >= 0;i++){
+    	  if(e == data[i])
+    		  return i;
+      }
+      return -1;
+  }
+
+  @Override
+  /** Remove the element at the specified position
+   *  in this list. Shift any subsequent elements to the left.
+   *  Return the element that was removed from the list.
+   */
+  public E remove(int index)  {
+	  checkIndex(index);
+	  E temp = data[index];
+		for(int i = index+1; i < size;i++){
+				data[i-1]=data[i];
+		}
+		size--;
+		return temp;
+  }
+
+  @Override
+  /** Replace the element at the specified position
+   *  in this list with the specified element.
+   */
+  public E set(int index, E e) {
+    checkIndex(index);
+    E antiguo = data[index];
+    data[index] = e;
+    return antiguo;
+  }
+
+  @Override
+  /** Override toString() to return elements in the list */
+  public String toString() {
+    StringBuilder resultado = new StringBuilder("[");
+
+    for (int i = 0; i < size; i++) {
+      resultado.append(data[i]);
+      if (i < size - 1) resultado.append(", ");
+    }
+
+    return resultado.toString() + "]";
+  }
+
+  /** Trims the capacity to current size */
+  @SuppressWarnings("unchecked")
+  public void trimToSize() {
+	  if(data.length != size){
+		  E[] otroData = (E[]) new Object[size];
+		  System.arraycopy(data,0,otroData,0,size);
+		  data= otroData;
+	  }
+
+  }
+
+  @Override
+  /** Devuelve una instancia de java.util.Iterator, una instancia de ArrayListIterator */
+  public java.util.Iterator<E> iterator() {
+	  return new ArrayListIterator();
+  }
+
+  	/**
+  	 * ArrayListIterator
+  	 *
+  	 * @author Juan Miguel Herrada Acosta
+  	 * @version 02.04.2017
+  	 */
+  private class ArrayListIterator implements java.util.Iterator<E> {
+	  private int current = 0;
+		/**
+		 * Devuelve true si el iterador tiene más elementos que recorrer
+		 */
+		public boolean hasNext() {
+			if (current < size)
+				return true;
+			else
+				return false;
+		}
+		/**
+		 * Devuelve el siguiente elemento del iterador
+		 */
+		public E next() {
+			E salida = data[current];
+			current++;
+			return salida;
+		}
+		/**
+		 * Elimina el último elemento obtenido usando el método next()
+		 */
+		public void remove() {
+			ArrayList.this.remove(current);
+		}
+	}
+}

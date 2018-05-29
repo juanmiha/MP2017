@@ -1,0 +1,215 @@
+package org.mp.sesion05;
+
+/**
+ * @author Juan Miguel Herrada Acosta
+ * @version 20.04.2017
+ */
+public class Carta implements Comparable{
+	/**
+	 * Creamos las variables.
+	 */
+	private String palo;
+	private int numero;
+	private int valor;
+
+	/**
+	 *  Metodo que asocia valores preterminados a las variables.
+	 */
+	public Carta(){
+		palo = "O";
+		numero = 1;
+		valor = 0;
+	}
+
+	/**
+	 * Inicilizamos las variables
+	 * @param palo
+	 * @param numero
+	 */
+	public Carta(String palo,int numero){
+		this.palo = palo;
+		this.numero = numero;
+		switch(palo){
+		case "O":
+			valor = numero;
+				break;
+		case "C":
+			valor = numero + 12;
+				break;
+		case "E":
+			valor = numero + 24;
+				break;
+		case "B":
+			valor = numero + 36;
+				break;
+		}
+	}
+
+	/**
+	 * Devuelve el valor de palo
+	 * @return palo
+	 */
+	public String getPalo(){
+		return palo;
+	}
+
+	/**
+	 * Devuelve el valor de numero
+	 * @return numero
+	 */
+	public int getNumero(){
+		return numero;
+	}
+
+	/**
+	 * Devuelve el valor de valor
+	 * @return valor
+	 */
+	public int getValor(){
+		return valor;
+	}
+
+	/**
+	 * Compara dos objetos devolviendo 1,-1 y 0 dependiendo de si son iguales o no.
+	 * @see org.mp.sesion01.Comparable#compareTo(java.lang.Object)
+	 * @param o
+	 * @return 1,-1,0
+	 */
+	@Override
+	public int compareTo(Object o) {
+		Carta otro=(Carta) o;
+			if(this.palo == otro.palo){
+				if(this.numero == otro.numero){
+					return 0;
+				}
+				if(this.numero > otro.numero){
+					return 1;
+				}
+				else{
+					return -1;
+				}
+			}
+			else{
+
+				int posicion1 = 0;
+				int posicion2 = 0;
+					switch(this.palo){
+					case "O":
+						posicion1=0;
+							break;
+					case "C":
+						posicion1=1;
+							break;
+					case "E":
+						posicion1=2;
+							break;
+					case "B":
+						posicion1=3;
+							break;
+					}
+					switch(otro.palo){
+					case "O":
+						posicion2=0;
+							break;
+					case "C":
+						posicion2=1;
+							break;
+					case "E":
+						posicion2=2;
+							break;
+					case "B":
+						posicion2=3;
+							break;
+					}
+				if(posicion1 > posicion2){
+					return 1;
+				}
+				else{
+					return -1;
+				}
+			}
+		}
+
+			/**
+			 * Compara dos objetos devolviendo 1,-1 y 0 dependiendo de si son iguales o no.
+			 * @param o
+			 * @param o2
+			 * @return int
+			 */
+			public static int compareTo(Object o,Object o2) {
+				Carta otro=(Carta) o;
+				Carta otro2=(Carta) o2;
+					if(otro.palo == otro2.palo){
+						if(otro.numero == otro2.numero){
+							return 0;
+						}
+						if(otro.numero > otro2.numero){
+							return 1;
+						}
+						else{
+							return -1;
+						}
+					}
+					else{
+
+						int posicion1 = 0;
+						int posicion2 = 0;
+
+						switch(otro.palo){
+						case "O":
+							posicion1=0;
+								break;
+						case "C":
+							posicion1=1;
+								break;
+						case "E":
+							posicion1=2;
+								break;
+						case "B":
+							posicion1=3;
+								break;
+						}
+						switch(otro2.palo){
+						case "O":
+							posicion2=0;
+								break;
+						case "C":
+							posicion2=1;
+								break;
+						case "E":
+							posicion2=2;
+								break;
+						case "B":
+							posicion2=3;
+								break;
+						}
+						if(posicion1 > posicion2){
+							return 1;
+						}
+						else{
+							return -1;
+						}
+					}
+
+	}
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				Carta other = (Carta) obj;
+				if (numero != other.numero)
+					return false;
+				if (palo == null) {
+					if (other.palo != null)
+						return false;
+				} else if (!palo.equals(other.palo))
+					return false;
+				if (valor != other.valor)
+					return false;
+				return true;
+			}
+}

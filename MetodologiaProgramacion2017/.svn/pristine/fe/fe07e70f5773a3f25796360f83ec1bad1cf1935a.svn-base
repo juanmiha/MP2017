@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Java Applet </title>
+  </head>
+  <body>
+    <applet
+      codebase="../../../../bin" 
+      code = "org/mp/tema05/DisplayLabelApplet03.class"
+      width = 250
+      height = 150>
+      <param name = Mensaje value = "Eurocopa 2012" />
+    </applet>
+  </body>
+</html>
+

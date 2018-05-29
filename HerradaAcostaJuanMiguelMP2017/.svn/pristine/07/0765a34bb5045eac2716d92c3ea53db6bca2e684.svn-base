@@ -1,0 +1,44 @@
+package org.mp.sesion07;
+
+public class Habitacion {
+	private String numero;
+
+	public Habitacion(String numero){
+		super();
+		this.numero = numero;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public String getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Habitacion other = (Habitacion) obj;
+		if (numero == null) {
+			if (other.numero != null)
+				return false;
+		} else if (!numero.equals(other.numero))
+			return false;
+		return true;
+	}
+
+}

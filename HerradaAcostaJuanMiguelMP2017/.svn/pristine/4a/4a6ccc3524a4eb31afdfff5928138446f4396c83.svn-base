@@ -1,0 +1,82 @@
+package org.mp.sesion06;
+
+import java.io.File;
+import java.util.List;
+import java.util.Locale;
+
+public class ConjuntoDatos {
+	private File archivoTexto;
+	private String separador;
+	private Locale locale;
+	private List cabecera;
+	private int numeroLineas;
+	private int numeroColumnas;
+	private Double[][] datos;
+
+	public ConjuntoDatos(File archivoTexto,String separador,Locale locale){
+		super();
+		this.archivoTexto = archivoTexto;
+		this.separador = separador;
+		this.locale = locale;
+		this.cabecera = cabecera(archivoTexto);
+		this.numeroLineas = numLineas(archivoTexto);
+		this.numeroColumnas = numColumnas(archivoTexto);
+		this.datos = leerDatos(archivoTexto,numeroLineas,numeroColumnas);
+	}
+
+	private List cabecera(File archivoTexto) {
+		return null;
+	}
+	private int numLineas(File archivoTexto) {
+		return 0;
+	}
+	private int numColumnas(File archivoTexto) {
+		return 0;
+	}
+	private Double[][] leerDatos(File archivoTexto2, int numeroLineas2, int numeroColumnas2) {
+		return null;
+	}
+
+	/**
+	 * @return the archivoTexto
+	 */
+	public File getArchivoTexto() {
+		return archivoTexto;
+	}
+	/**
+	 * @return the separador
+	 */
+	public String getSeparador() {
+		return separador;
+	}
+	/**
+	 * @return the locale
+	 */
+	public Locale getLocale() {
+		return locale;
+	}
+	/**
+	 * @return the cabecera
+	 */
+	public List getCabecera() {
+		return cabecera;
+	}
+	/**
+	 * @return the numeroLineas
+	 */
+	public int getNumeroLineas() {
+		return numeroLineas;
+	}
+	/**
+	 * @return the numeroColumnas
+	 */
+	public int getNumeroColumnas() {
+		return numeroColumnas;
+	}
+	/**
+	 * @return the datos
+	 */
+	public Double[][] getDatos() {
+		return datos;
+	}
+}

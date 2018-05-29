@@ -1,0 +1,48 @@
+package org.mp.sesion04;
+
+public class SortedLinkedList<E extends Comparable<E>> extends org.mp.sesion03.LinkedList<E> {
+	public SortedLinkedList() {
+		super();
+	}
+
+	public SortedLinkedList(Comparable<E>[] objects){
+		for (int i = 0; i < objects.length; i++)
+		  	addSorted(objects[i]);
+	}
+	public void addFirst(E e)  {
+		throw new UnsupportedOperationException("No garantiza orden");
+	}
+
+	public void addLast(E e) {
+		throw new UnsupportedOperationException("No garantiza orden");
+	}
+	public E set(int index,E o){
+		throw new UnsupportedOperationException("No garantiza orden");
+	}
+	public void add(E o) {
+		throw new UnsupportedOperationException("No garantiza orden");
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addSorted(Comparable<E> e) {
+		if (getFirst() == null || e.compareTo(getFirst()) < 0 ) {
+			super.addFirst((E) e);
+		}else if (e.compareTo(getLast()) > 0) {
+			super.addLast((E) e);
+		} else {
+			int posicionMayorIgual = 0;
+			int elementoComparado = 0;
+			for(int i = 0; i < size; i++) {
+				elementoComparado = e.compareTo(super.get(i));
+				posicionMayorIgual++;
+				if (elementoComparado < 0)
+					break;
+			}
+			super.add(posicionMayorIgual - 1, (E) e);
+		}
+	}
+
+	public String toString() {
+		return "Lista ordenada: " + super.toString();
+	}
+}

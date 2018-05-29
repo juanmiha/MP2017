@@ -1,0 +1,85 @@
+package org.mp.sesion07;
+
+import java.util.Date;
+import java.util.List;
+
+public class Residencia {
+	private String nombre;
+	private List<Residente> residentes;
+	private List<Habitacion> habitaciones;
+	private List<Reserva> reservas;
+
+	public Residencia(String nombre){
+
+	}
+	public Residencia(String nombre,Habitacion[] habitaciones){
+
+	}
+	public void ingreso(Residente residente,Habitacion habitacion,Date fechaInicio,Date fechaFin){
+
+	}
+	public boolean isHabitacionOcupada(Habitacion habitacion,Date fecha){
+		return true;
+	}
+	private int controlFechas(Date fechaInicio,Date fechaFin){
+		return 0;
+	}
+	private boolean insetarResidente(Residente residente){
+		return true;
+	}
+	public void insertarHabitacion(Habitacion habitacion){
+
+	}
+	public Habitacion[] getHabitaciones() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Object getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public int getNHabitaciones() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public Habitacion buscarHabitacion(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public void eliminarHabitacion(Habitacion habitacion1) {
+		// TODO Auto-generated method stub
+
+	}
+	public int getNReservas() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getNResidentes() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public void cambiarHabitacion(Residente residente1, Habitacion habitacion4, Date parse, Date parse2) {
+		// TODO Auto-generated method stub
+
+	}
+	public void salida(Residente residente1, Date parse) {
+		// TODO Auto-generated method stub
+
+	}
+	public Reserva[] getReservas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String listadoHabitacionesLibres(Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String listadoResidentesHabitaciones(Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String listadoEdadMediaPorSexo(Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

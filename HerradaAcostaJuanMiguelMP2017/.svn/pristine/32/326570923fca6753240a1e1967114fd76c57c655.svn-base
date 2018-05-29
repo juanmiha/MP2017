@@ -1,0 +1,50 @@
+package org.mp.sesion04;
+
+public class GenericJosephus<E> extends GenericQueue<E> {
+	private int k;
+	private int n;
+	private GenericQueue<E> cola;
+
+	public GenericJosephus(int k,int n,E[] objects){
+		this.k = k;
+		this.n = n;
+		this.cola = new GenericQueue<E>();
+		if	(objects != null){
+			for(int i = 0; i < objects.length;i++){
+				cola.enqueue(objects[i]);
+			}
+		}
+	}
+	public GenericQueue<E> getCola(){
+		return cola;
+	}
+	@Override
+	public String toString() {
+		return "Problema de Josephus: k=" + k + ", n=" + n + "\n" + getCola() + "";
+	}
+	public String ordenEliminar(GenericQueue<E> cola){
+		if (n==0){
+			throw new RuntimeException("No hay ninguna persona");
+		}else if (n==1) {
+			return "Solo hay una persona";
+		}
+		String resultado="Orden de eliminación: \n";
+		GenericQueue<E> colaTemp = new GenericQueue<E>();
+		int contador = 0;
+		E temp;
+		while (n>0){
+			contador++;
+			if(contador == k){
+				temp=cola.dequeue();
+				resultado+="Debe morir "+temp+"\n";
+				colaTemp.enqueue(temp);
+				n--;
+				contador = 1;
+			}
+			temp=cola.dequeue();
+			cola.enqueue(temp);
+		}
+		cola.dequeue();
+		return resultado;
+	}
+}

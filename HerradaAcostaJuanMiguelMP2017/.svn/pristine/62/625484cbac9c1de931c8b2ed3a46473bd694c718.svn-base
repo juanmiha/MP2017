@@ -1,0 +1,27 @@
+package org.mp.sesion04;
+
+public class Evaluador{
+	private GenericStack<Integer> pila;
+	public Evaluador(){
+		this.pila= new GenericStack<Integer>();
+	}
+	public String eliminarBlancos(String expresion){
+		return null;
+	}
+	public void procesarUnOperador(char op,GenericStack<Integer> operandosPila){
+
+	}
+	public int evaluarExpresion(String expresion){
+		return 0;
+	}
+	private boolean soloDigitos(String expresion){
+		if(expresion.contains("+") || expresion.contains("-") || expresion.contains("*") || expresion.contains("/") || expresion.contains("(") || expresion.contains(")") )
+			return false;
+		return true;
+	}
+	private boolean esOperador(String token){
+		if(token == "+" || token == "*" || token == "-" || token == "/")
+			return true;
+		return false;
+	}
+}

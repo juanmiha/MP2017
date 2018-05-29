@@ -1,0 +1,189 @@
+package org.mp.sesion07;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.Scanner;
+/**
+ *
+ * @author Juan Miguel Herrada Acosta
+ * @version 05/06/2017
+ */
+public class ImagenDAO {
+
+	/**
+	 * Escribe un fichero de texto cabecera con los datos necesarios para
+	 * procesar la imagen y llama al metodo privado escribirBSQ() para
+	 * escribirla en disco
+	 *
+	 * @param nombreArchivo
+	 *            nombre del archivo cabecera
+	 * @param imagen
+	 *            imagen a escribir en disco
+	 * @throws IOException
+	 * 			  errores a la entrada o salida de datos haciendo referencia a archivos
+	 */
+	@SuppressWarnings("rawtypes")
+	public static void escribirArchivo(String nombreArchivo, Imagen imagen) throws IOException {
+		//Creamos file
+		File file = new File(nombreArchivo);
+		//Abrimos file modo escritura
+		FileWriter fw = new FileWriter(file);
+		BufferedWriter bw = new BufferedWriter(fw);
+		PrintWriter pw = new PrintWriter(bw);
+
+		String nombre = file.getName();
+		int indice = nombre.indexOf(".");
+		nombre = nombre.substring(0, indice);
+
+		pw.println(nombre + ".dat");
+		pw.println(imagen.getFormatoImagen());
+
+		int nBandas = imagen.getNumeroBandas();
+		pw.println(nBandas);
+
+		String string = "[";
+
+		for(Iterator iterator = imagen.getBandas().iterator(); iterator.hasNext();){
+			BandaInt banda = (BandaInt) iterator.next();
+			string = string + banda.getNombreBanda() + ";";
+		}
+
+		string = string.substring(0, string.length()-1);
+		string = string + "]";
+		pw.println(string);
+
+		pw.println(imagen.getLineas());
+		pw.println(imagen.getColumnas());
+		pw.close();
+
+		String nombreAPoner = file.getParent();
+		nombreAPoner = nombreAPoner + "\\" + nombre + ".dat";
+
+		if(imagen.getFormatoImagen().equals("BSQ"))
+			escribirBSQ(nombreAPoner, imagen);
+	}
+
+	/**
+	 * Metodo privado escribirBSQ. Se encarga de escribir la imagen en disco en
+	 * formato binario.
+	 *
+	 * @param nombreArchivo
+	 *            nombre y ruta del archivo donde se escribira la imagen
+	 * @param imagen
+	 *            imagen a escribir en disco
+	 * @throws IOException
+	 * 			   errores a la entrada o salida de datos haciendo referencia a archivos
+	 */
+	private static void escribirBSQ(String nombreArchivo, Imagen imagen) throws IOException {
+		File salidaBinaria = new File(nombreArchivo);
+		FileOutputStream fis = new FileOutputStream(salidaBinaria);
+		DataOutputStream dos = new DataOutputStream(fis);
+
+		int lineas = imagen.getLineas();
+		int columnas = imagen.getColumnas();
+		int numeroBandas = imagen.getNumeroBandas();
+
+		for(int i = 0; i < numeroBandas; i++){
+
+			for( int j = 0; j < lineas; j++){
+
+				for(int k = 0; k < columnas; k++){
+
+					dos.write(imagen.getBanda(i).getDatosXY(k, j));
+				}
+			}
+		}
+		dos.close();
+		fis.close();
+	}
+
+	/**
+	 * Lee el fichero cabecera para obtener los datos y llama al metodo privado
+	 * leerBSQ() para leer la imagen desde un fichero binario
+	 *
+	 * @param nombreArchivo
+	 *            nombre del fichero de texto cabecera a leer
+	 * @return Imagen leida del archivo
+	 *
+	 * @throws IOException
+	 * 			  errores a la entrada o salida de datos haciendo referencia a archivos
+	 */
+	@SuppressWarnings("resource")
+	public static Imagen leerArchivo(String nombreArchivo) throws IOException {
+		File f = new File (nombreArchivo);
+		FileReader fr = new FileReader (f);
+		BufferedReader br = new BufferedReader (fr);
+		//Nombre del fichero bsq
+		String nombreBSQ = br.readLine();
+		//Formato de la imagen
+		String formatoImagen = br.readLine();
+		//Número de bandas
+		int numeroBandas = Integer.parseInt(br.readLine());
+		//Nombre de las bandas
+		//Separamos los nombres y los metemos en un array
+		String cadena = br.readLine();
+		cadena = cadena.replace("[", "");
+		cadena = cadena.replace("]", "");
+		//para quitar los [ ] uso substring o replace (uno de los dos)
+		String []nbandas = new String[numeroBandas];
+		Scanner sc = new Scanner (cadena);
+		sc.useDelimiter(";");
+		for (int i=0; i<numeroBandas; i++)
+			nbandas[i] = sc.next();
+		//Número de lineas
+		int numeroLineas = Integer.parseInt(br.readLine());
+		//Número de columnas
+		int numeroColumnas = Integer.parseInt(br.readLine());
+		br.close();
+		Imagen imagen = new Imagen (numeroLineas, numeroColumnas,formatoImagen);
+		String nombreCompletoBSQ = f.getParent() + File.separator + nombreBSQ;
+		imagen = leerBSQ (nombreCompletoBSQ, imagen, nbandas);
+
+		return imagen;
+	}
+
+	/**
+	 * Metodo privado que se encarga de leer la imagen desde un fichero binario
+	 * y devolverla.
+	 *
+	 * @param nombreArchivo
+	 *            nombre del fichero binario a leer
+	 * @param imagen
+	 *            Imagen instanciada con el numero de lineas, columnas y formato
+	 *            de la imagen a leer
+	 * @param nbandas
+	 *            nombre de las bandas de la imagen a leer
+	 * @return Imagen con todas los datos y bandas leidos de fichero
+	 */
+	private static Imagen leerBSQ(String nombreArchivo, Imagen imagen, String[] nbandas) {
+		Imagen imagenDev = new Imagen(imagen.getLineas(), imagen.getColumnas(), imagen.getFormatoImagen());
+
+		for( int i = 0; i < nbandas.length; i++){
+
+			BandaInt bi = new BandaInt(nbandas[i], imagen.getLineas(), imagen.getColumnas());
+
+			for(int j = 0; j < imagen.getLineas(); j++){
+
+				for( int k = 0; k < imagen.getColumnas(); k++){
+
+					bi.setDatosXY((i+1)*10000 + j*100 + k, k, j);
+				}
+			}
+
+			imagenDev.anadirBanda(bi);
+		}
+
+
+		return imagenDev;
+	}
+
+}
+

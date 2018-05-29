@@ -1,0 +1,59 @@
+package org.mp.sesion08;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Indalo extends JFrame {
+
+	public Indalo() {
+
+		IndaloPanel indalo = new IndaloPanel();
+		add(indalo);
+		setTitle("Dibujo Indalo");
+		indalo.setBackground(Color.WHITE);
+	}
+
+	public static void main(String[] args) {
+
+		 Indalo frame = new Indalo();
+		 frame.setLocationRelativeTo(null);
+		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 frame.setSize(300, 300);
+		 frame.setVisible(true);
+	}
+
+	class IndaloPanel extends JPanel {
+
+		  protected void paintComponent(Graphics i) {
+		    super.paintComponent(i);
+
+		    int xCenter = getWidth() / 2;
+		    int yCenter = getHeight() / 2;
+
+		    i.drawLine(xCenter-70, yCenter-60, xCenter+70, yCenter-60);
+		    i.drawArc(xCenter-70, yCenter-120, 140, 120, 0, 180);
+		    i.drawLine(xCenter, yCenter-70, xCenter, yCenter + 25);
+		    i.drawArc(xCenter-12, yCenter-95, 24, 24, 0, 360);
+		    i.drawLine(xCenter, yCenter+25, xCenter+65, yCenter+85);
+		    i.drawLine(xCenter, yCenter+25, xCenter-65, yCenter+85);
+
+		    i.setColor(Color.RED);
+		    i.setFont(new Font("Arial", Font.ITALIC , 20));
+
+		    FontMetrics fm = i.getFontMetrics();
+			int stringWidth = fm.stringWidth("Hola Mundo");
+			int stringAscent = fm.getAscent();
+
+			int xCoordinate = getWidth() / 2 - stringWidth / 2;
+			int yCoordinate = getHeight() / 2 + stringAscent / 2;
+
+		    i.drawString("Indalo", xCoordinate + 25, yCoordinate +85);
+
+		  }
+	}
+}

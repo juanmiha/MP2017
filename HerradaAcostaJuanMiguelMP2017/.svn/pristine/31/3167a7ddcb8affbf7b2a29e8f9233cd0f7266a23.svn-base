@@ -1,0 +1,65 @@
+package org.mp.sesion07;
+
+import java.util.Arrays;
+
+public class BandaInt {
+	private String nombreBanda;
+	private int[][] datos;
+
+	public BandaInt(String nombre,int x,int y){
+		super();
+		this.nombreBanda = nombre;
+		this.datos= new int[x][y];
+	}
+	public BandaInt(String nombre,int[][] datos){
+		super();
+		this.nombreBanda = nombre;
+		this.datos= datos.clone();
+	}
+	/**
+	 * @return the nombreBanda
+	 */
+	public String getNombreBanda() {
+		return nombreBanda;
+	}
+	/**
+	 * @param nombreBanda the nombreBanda to set
+	 */
+	public void setNombreBanda(String nombreBanda) {
+		this.nombreBanda = nombreBanda;
+	}
+	/**
+	 * @return the datos
+	 */
+	public int[][] getDatos() {
+		return datos;
+	}
+	/**
+	 * @param datos the datos to set
+	 */
+	public void setDatos(int[][] datos) {
+		this.datos = datos;
+	}
+	public int getDatosXY(int x,int y){
+		return datos[x][y];
+	}
+	public int setDatosXY(int x,int y, int dato){
+		int temp=this.datos[x][y];
+		this.datos[x][y] = dato;
+		return temp;
+	}
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(nombreBanda + ": \n");
+
+		for (int i = 0; i < datos.length; i++) {
+			for (int j = 0; i < datos[0].length; j++) {
+				stringBuffer.append(datos[i][j] + ", ");
+			}
+			System.out.println();
+		}
+		return "BandaInt [nombreBanda=" + nombreBanda + ", datos=" + Arrays.toString(datos) + "]";
+	}
+
+}

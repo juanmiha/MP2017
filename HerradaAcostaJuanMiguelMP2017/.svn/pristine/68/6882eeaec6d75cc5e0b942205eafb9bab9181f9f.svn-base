@@ -1,0 +1,15 @@
+package org.mp.sesion07;
+
+public class Reserva {
+
+	public static int getUltimoNumero() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getNumeroReserva() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

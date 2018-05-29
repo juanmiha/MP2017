@@ -1,0 +1,106 @@
+package org.mp.sesion07;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Imagen {
+	private String formatoImagen;
+	private ArrayList<BandaInt> bandas;
+	private int lineas;
+	private int columnas;
+
+	public Imagen(int lineas,int columnas,String formatoImagen){
+		super();
+		this.lineas = lineas;
+		this.columnas = columnas;
+		this.formatoImagen = formatoImagen;
+		this.bandas = new ArrayList<BandaInt>();
+
+	}
+	public int[] getDatosPixel(int x,int y)throws XYFueraImagenException{
+		if(!XYValida(x,y,x,y)){
+			throw new XYFueraImagenException("XY no valida");
+		}
+		int[] datos = new int[getNumeroBandas()];
+		int i = 0;
+		for(Iterator iterator = bandas.iterator();iterator.hasNext();){
+			BandaInt banda = (BandaInt) iterator.next();
+			datos[i] = banda.getDatosXY(x, y);
+			i++;
+		}
+		return datos;
+	}
+	public Imagen extaerImagen(int x1,int y1,int x2,int y2)throws XYFueraImagenException{
+		if(!XYValida(x1,y1,x2,y2)){
+			throw new XYFueraImagenException("XY no valida");
+		}
+		int lin = y2- y1 +1;
+		int col = x2 -x1 +1;
+
+		Imagen imagen1= new Imagen(lin,col,formatoImagen);
+		for(int i = 0; i<getNumeroBandas();i++){
+			int[][] datos = new int[lin][col];
+			for (int j = y1, c = 0;j < y2; j++,c++) {
+				for (int k = 0, f = 0; k < x2; k++,f++) {
+					datos[c][f] = getBanda(i).getDatosXY(j, k);
+				}
+
+			}
+			BandaInt baridaIntegers = new BandaInt(getBanda(i).getNombreBanda(),datos);
+			imagen1.añadirBanda(baridaIntegers);
+		}
+		return imagen1;
+	}
+	public void añadirBanda(BandaInt banda){
+		bandas.add(banda);
+	}
+	public void eliminarBada(int i){
+		bandas.remove(i);
+	}
+	public BandaInt getBanda(int i){
+		return (BandaInt) bandas.get(i);
+	}
+	public ArrayList getBandas(){
+		return (ArrayList)bandas;
+	}
+	public int getNumeroBandas(){
+		return (int)bandas.size();
+	}
+	/**
+	 * @return the formatoImagen
+	 */
+	public String getFormatoImagen() {
+		return formatoImagen;
+	}
+	/**
+	 * @return the lineas
+	 */
+	public int getLineas() {
+		return lineas;
+	}
+	/**
+	 * @return the columnas
+	 */
+	public int getColumnas() {
+		return columnas;
+	}
+	public void setFormatoImagen(String formatoImagen){
+		this.formatoImagen = formatoImagen;
+	}
+	/**
+	 * @param bandas the bandas to set
+	 */
+	public void setBandas(ArrayList<BandaInt> bandas) {
+		this.bandas = bandas;
+	}
+	private boolean XYValida(int x1,int y1,int x2,int y2){
+		boolean b = false;
+		if(x1>= 0 & x1<=columnas & y1>=0 & y1<= lineas){
+			if(x2>= 0 & x2<=columnas & y2>=0 & y2<= lineas){
+				b = true;
+			}
+		}
+		return b;
+	}
+
+}

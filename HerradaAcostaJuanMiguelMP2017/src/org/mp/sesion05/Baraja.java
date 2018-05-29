@@ -1,0 +1,47 @@
+package org.mp.sesion05;
+/**
+ * @author Juan Miguel Herrada Acosta
+ * @version 20.04.2017
+ */
+public class Baraja{
+	/**
+	 * Creamos las variables
+	 */
+	@SuppressWarnings("unused")
+	private String nombreBaraja;
+	private Carta[] cartas;
+
+	/**
+	 * Inicializamos las variables.
+	 * @param nombreBaraja
+	 * @param cartas
+	 */
+	public Baraja(String nombreBaraja, Carta[]cartas){
+
+		this.nombreBaraja = nombreBaraja;
+		this.cartas = cartas;
+	}
+
+	/**
+	 * Devolvemos el valor de cartas
+	 * @return cartas
+	 */
+	public Carta[] getCartas(){
+		return  cartas;
+	}
+
+	/**
+	 * Ordenamos el array que le pasamos con el metodo insecion.
+	 * @param a
+	 */
+	public static void insercion(Carta[] a) {
+		for (int i = 1; i < a.length; i++) {
+			Carta aux = a[i];
+			int j;
+				for (j = i - 1; j >= 0 && (Carta.compareTo(aux,a[j]) < 0); j--) {
+					a[j + 1] = a[j];
+				}
+			 a[j + 1] = aux;
+		}
+	}
+}

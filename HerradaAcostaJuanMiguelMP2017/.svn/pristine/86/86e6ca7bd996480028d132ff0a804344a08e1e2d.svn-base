@@ -1,0 +1,67 @@
+package org.mp.sesion04;
+
+import java.util.StringTokenizer;
+
+public class Evaluador{
+	private GenericStack<Integer> pila;
+	public Evaluador(){
+		this.pila= new GenericStack<Integer>();
+	}
+	public String[] eliminarBlancos(String expresion){
+		StringTokenizer clasificacion = new StringTokenizer(expresion, "+-*/ ", true);
+		GenericQueue <String> colaSinBlancos = new GenericQueue<String>();
+		String token;
+		while(clasificacion.hasMoreTokens()){
+			token = clasificacion.nextToken();
+			if(!token.equals(" ")){
+				colaSinBlancos.enqueue(token);
+			}
+		}
+		String[] sinBlancos = new String[colaSinBlancos.getSize()];
+		for (int i = 0; i < sinBlancos.length;i++){
+			sinBlancos[i] = colaSinBlancos.dequeue();
+		}
+		return sinBlancos;
+	}
+	public void procesarUnOperador(char op,GenericStack<Integer> operandosPila){
+		if(op == '*'){
+			int	operacion = operandosPila.pop()*operandosPila.pop();
+			operandosPila.push(operacion);
+		}
+		if(op == '/'){
+
+			int operador1= operandosPila.pop();
+			if(operador1 == 0){
+				throw new RuntimeException("No es posible una división por cero");
+			}
+			int operador2= operandosPila.pop();
+			int	operacion = operador2/operador1;
+			operandosPila.push(operacion);
+			}
+		if(op == '+'){
+			int	operacion = operandosPila.pop() + operandosPila.pop();
+			operandosPila.push(operacion);
+			}
+		if(op == '-'){
+			int operador1= operandosPila.pop();
+			int operador2= operandosPila.pop();
+			int	operacion = operador2-operador1;
+			operandosPila.push(operacion);
+			}
+	}
+	public int evaluarExpresion(String expresion){
+		return 0;
+	}
+	@SuppressWarnings("unused")
+	private boolean soloDigitos(String expresion){
+		if(expresion.contains("+") || expresion.contains("-") || expresion.contains("*") || expresion.contains("/") || expresion.contains("(") || expresion.contains(")") )
+			return false;
+		return true;
+	}
+	@SuppressWarnings("unused")
+	private boolean esOperador(String token){
+		if(token == "+" || token == "*" || token == "-" || token == "/")
+			return true;
+		return false;
+	}
+}

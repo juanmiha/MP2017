@@ -1,0 +1,22 @@
+package org.mp.sesion08;
+
+import javax.swing.JFrame;
+
+
+public class Indalo {
+	public Indalo(){	
+		setTitle("Dibujo Indalo");
+		
+	
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 Indalo frame = new Indalo();
+		    frame.setLocationRelativeTo(null); // Centra el frame
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    frame.setSize(250, 300);
+		    frame.setVisible(true);
+	}
+
+}
